@@ -41,6 +41,7 @@ public class ConsumerReceiverImpl implements ConsumerReceiverService {
      * @param channel  渠道
      * @throws IOException
      */
+    @Override
     public void receiverJson(Message message, Channel channel) throws IOException {
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
@@ -56,7 +57,8 @@ public class ConsumerReceiverImpl implements ConsumerReceiverService {
                 for (String property : field) {
                     String fieldValue;
                     if (StringUtils.startsWith(property,"info")){
-                        fieldValue = String.valueOf(ReflectUtil.getFieldValue(msgVO.getInfo(), property));
+                        String propertyEnd = StringUtils.substringAfterLast(property, ".");
+                        fieldValue = String.valueOf(ReflectUtil.getFieldValue(msgVO.getInfo(), propertyEnd));
                     }else {
                         fieldValue = String.valueOf(ReflectUtil.getFieldValue(msgVO, property));
                     }

@@ -72,11 +72,12 @@ public class ProducerServiceImpl implements ProducerService {
     @Override
     public HashMap<String, Object> sendDelayTestMap(MsgVO msgVO) {
         HashMap<String, Object> result = new HashMap<>(8);
+        // 是否进行不雅词汇过滤
         Boolean checkWord = msgVO.getCheckWord();
         if (ObjectUtil.isNotEmpty(checkWord) && checkWord){
             HashMap<String, Object> info = (HashMap<String, Object>) msgVO.getInfo();
             String content = (String) info.get("content");
-            HashMap<String, Object> resultWord = indecentService.getSensitiveWordsByDFA(content, true, 1);
+            HashMap<String, Object> resultWord = indecentService.getSensitiveWordsByDFA(content, true, 2);
             if (MapUtil.isNotEmpty(resultWord)){
               return resultWord;
             }
