@@ -16,8 +16,11 @@ import lombok.ToString;
 @ToString
 public class MsgVO extends MsgDTO{
     /***
-     * 字段逗号隔开
+     * 校验的字段逗号隔开
      */
     private String checkField;
+    /***
+     * 是否进行不要词汇的过滤
+     */
     private Boolean checkWord;
 }
