@@ -8,6 +8,15 @@ spring:
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
+  rabbitmq:
+    username: qaz
+    password: 123456
+    host: 192.168.153.130
+    port: 5672
+    virtual-host: /test_host
+  # 消息确认（ACK）
+  publisher-confirm-type: correlated #确认消息已发送到交换机(Exchange)
+  publisher-returns: true #确认消息已发送到队列(Queue)
 redisson:
   redis:
     host: 192.168.153.130

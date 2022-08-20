@@ -57,7 +57,7 @@ public class IndecentServiceImpl  extends ServiceImpl<SensitiveWordDao, Sensitiv
 
     /**
      *
-     * 读取带敏感词的布隆过滤器通过布隆过滤器来实现
+     * 读取带敏感词的
      *
      * @return
      * @throws IOException
