@@ -95,7 +95,7 @@ public class ProducerServiceImpl implements ProducerService {
             message.getMessageProperties().setHeader("x-delay", time);
             return message;
         });
-        log.info("map格式的数据发送成功 发送时间为", DateUtil.now());
+        log.info("map格式的数据发送成功 发送时间为[{}]", DateUtil.now());
         result.put("code",200);
         result.put("msg","发送成功！");
         return result;

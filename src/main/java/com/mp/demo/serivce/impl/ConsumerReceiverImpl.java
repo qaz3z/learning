@@ -1,12 +1,10 @@
 package com.mp.demo.serivce.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.MD5;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mp.demo.constant.RedisKey;
-import com.mp.demo.entity.MsgDTO;
 import com.mp.demo.entity.MsgVO;
 import com.mp.demo.serivce.ConsumerReceiverService;
 import com.rabbitmq.client.Channel;
@@ -18,8 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -58,11 +54,15 @@ public class ConsumerReceiverImpl implements ConsumerReceiverService {
                     String fieldValue;
                     if (StringUtils.startsWith(property,"info")){
                         String propertyEnd = StringUtils.substringAfterLast(property, ".");
-                        fieldValue = String.valueOf(ReflectUtil.getFieldValue(msgVO.getInfo(), propertyEnd));
+                        Object name = ReflectUtil.getFieldValue(msgVO, "info");
+                        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(name);
+                        fieldValue = jsonObject.getString(propertyEnd);
                     }else {
                         fieldValue = String.valueOf(ReflectUtil.getFieldValue(msgVO, property));
                     }
-                    checkContent.append(fieldValue);
+                    if (StringUtils.isNotBlank(fieldValue)){
+                        checkContent.append(fieldValue);
+                    }
                 }
                 String msg = SecureUtil.md5(checkContent.toString());
                 String key = RedisKey.PRE_MSG.concat(msg);
