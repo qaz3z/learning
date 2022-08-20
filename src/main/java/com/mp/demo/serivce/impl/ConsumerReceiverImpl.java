@@ -64,7 +64,7 @@ public class ConsumerReceiverImpl implements ConsumerReceiverService {
                     }
                     checkContent.append(fieldValue);
                 }
-                String msg = SecureUtil.md5(msgVO.toString());
+                String msg = SecureUtil.md5(checkContent.toString());
                 String key = RedisKey.PRE_MSG.concat(msg);
                 Boolean isExist = redisTemplate.hasKey(key);
                 if (isExist) {
